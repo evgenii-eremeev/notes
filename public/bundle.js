@@ -28470,6 +28470,10 @@
 
 	var _EditForm2 = _interopRequireDefault(_EditForm);
 
+	var _NoteControlPanel = __webpack_require__(223);
+
+	var _NoteControlPanel2 = _interopRequireDefault(_NoteControlPanel);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function Notes(_ref) {
@@ -28480,46 +28484,23 @@
 	    var onEditFormUnmount = _ref.onEditFormUnmount;
 	    var onSaveClickHandler = _ref.onSaveClickHandler;
 
-
 	    return _react2.default.createElement(
 	        'div',
 	        null,
+	        _react2.default.createElement(
+	            'p',
+	            null,
+	            note.text
+	        ),
 	        editMode ? _react2.default.createElement(_EditForm2.default, {
 	            note: note,
 	            onClickHandler: onSaveClickHandler,
 	            onEditFormUnmount: onEditFormUnmount
-	        }) : _react2.default.createElement(
-	            'div',
-	            null,
-	            _react2.default.createElement(
-	                'p',
-	                null,
-	                note.text
-	            ),
-	            !note.occupied ? _react2.default.createElement(
-	                'div',
-	                null,
-	                _react2.default.createElement(
-	                    'button',
-	                    { onClick: function onClick() {
-	                            return onDeleteClickHandler(note._id);
-	                        } },
-	                    'Удалить'
-	                ),
-	                _react2.default.createElement(
-	                    'button',
-	                    { onClick: function onClick() {
-	                            return onEditClickHandler(note._id);
-	                        } },
-	                    'Редактировать'
-	                )
-	            ) : _react2.default.createElement(
-	                'p',
-	                null,
-	                'Редактируется: ',
-	                note.occupied
-	            )
-	        )
+	        }) : _react2.default.createElement(_NoteControlPanel2.default, {
+	            note: note,
+	            onDeleteClickHandler: onDeleteClickHandler,
+	            onEditClickHandler: onEditClickHandler
+	        })
 	    );
 	}
 
@@ -28804,6 +28785,54 @@
 	}(_react2.default.Component);
 
 	exports.default = EditForm;
+
+/***/ },
+/* 223 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function NoteControlPanel(_ref) {
+	    var onDeleteClickHandler = _ref.onDeleteClickHandler;
+	    var onEditClickHandler = _ref.onEditClickHandler;
+	    var note = _ref.note;
+
+	    return !note.occupied ? _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	            'button',
+	            { onClick: function onClick() {
+	                    return onDeleteClickHandler(note._id);
+	                } },
+	            'Удалить'
+	        ),
+	        _react2.default.createElement(
+	            'button',
+	            { onClick: function onClick() {
+	                    return onEditClickHandler(note._id);
+	                } },
+	            'Редактировать'
+	        )
+	    ) : _react2.default.createElement(
+	        'p',
+	        null,
+	        'Редактируется: ',
+	        note.occupied
+	    );
+	}
+
+	exports.default = NoteControlPanel;
 
 /***/ }
 /******/ ]);
