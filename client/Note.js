@@ -1,24 +1,38 @@
 import React from 'react';
 
+import EditForm from './EditForm';
+
 function Notes({
-    note, onDeleteClickHandler, onEditClickHandler
+    note, editMode, onDeleteClickHandler,
+    onEditClickHandler, onEditFormUnmount, onSaveClickHandler
 }) {
-    let editMode = false;
+
     return (
         <div>
-            <p>{ note.text }</p>
-            <button onClick={() => onEditClickHandler(note._id)}>
-                Редактировать
-            </button>
-            <button onClick={() => onDeleteClickHandler(note._id)}>
-                Удалить
-            </button>
-            {note.occupied ?
-                <span>
-                    Редактируется: {note.occupied}
-                </span> : ""
-            }
             {editMode ?
+                <EditForm
+                    note={note}
+                    onClickHandler={onSaveClickHandler}
+                    onEditFormUnmount={onEditFormUnmount}
+                    />
+                :
+                <div>
+                    <p>{ note.text }</p>
+                    {!note.occupied ?
+                        <div>
+                            <button onClick={() => onDeleteClickHandler(note._id)}>
+                                Удалить
+                            </button>
+                            <button onClick={() => onEditClickHandler(note._id)}>
+                                Редактировать
+                            </button>
+                        </div>
+                            :
+                        <p>
+                            Редактируется: {note.occupied}
+                        </p>
+                    }
+                </div>
             }
         </div>
     );

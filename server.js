@@ -25,35 +25,70 @@ function emitState(io) {
     });
 }
 
+
 io.on('connection', (socket) => {
 
     emitState(io);
 
-    socket.on('add note', (text) => {
-        const note = new Note({ text });
+    socket.on('add note', ({ noteText }) => {
+        const note = new Note({ text: noteText });
         note.save((err, note) => {
             if (err) return console.error(err);
             emitState(io);
         });
     });
 
-    socket.on('delete', (noteId) => {
+    socket.on('delete note', (noteId) => {
         Note.findByIdAndRemove(noteId, (err, note) => {
             if (err) return console.error(err);
             emitState(io);
         });
     });
 
-    socket.on('edit', (noteId) => {
+    socket.on('edit note', (noteId) => {
         Note.findByIdAndUpdate(
             noteId,
-            { occupied: 'bysomeone' }, // sent as {$set: {occupied: 'bysomeone'}}
+            { occupied: socket.id }, // sent as {$set: {...}}
             (err, note) => {
                 if (err) return console.error(err);
                 emitState(io);
             }
         );
     });
+
+    socket.on('free note', (noteId) => {
+        Note.findByIdAndUpdate(
+            noteId,
+            { $unset: {occupied: socket.id }},
+            (err, note) => {
+                if (err) return console.error(err);
+                emitState(io);
+            }
+        );
+    });
+
+    socket.on('save note', ({noteId, noteText}) => {
+        Note.findByIdAndUpdate(
+            noteId,
+            { text: noteText, occupied: ""},
+            (err, note) => {
+                if (err) return console.error(err);
+                emitState(io);
+            }
+        );
+    });
+
+    socket.on('disconnect', () => {
+        Note.update(
+            { occupied: socket.id },
+            { $unset: { occupied: ''}},
+            (err) => {
+                if (err) return console.erro(error);
+                emitState(io);
+            }
+        );
+    });
+
 });
 
 const port = process.env.PORT || 3000
