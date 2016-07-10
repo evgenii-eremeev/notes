@@ -9,7 +9,9 @@ const io = require('socket.io')(http);
 const Note = require('./server/models/note.js');
 
 // загружаем скрытые переменные
-require('dotenv').load();
+if (!process.env.NODE_ENV === "production") {
+    require('dotenv').load();
+}
 
 // mongoose
 mongoose.connect(`mongodb://${process.env.MLAB_USERNAME}:${process.env.MLAB_PASSWORD}@ds017155.mlab.com:17155/notes`);
