@@ -8,8 +8,9 @@ const io = require('socket.io')(http);
 // models
 const Note = require('./server/models/note.js');
 
+
 // загружаем скрытые переменные
-if (!process.env.NODE_ENV === "production") {
+if (!(process.env.NODE_ENV === "production")) {
     require('dotenv').load();
 }
 
@@ -110,5 +111,6 @@ io.on('connection', (socket) => {
 
 const port = process.env.PORT || 3000
 http.listen(port, () => {
+    console.log('NODE_ENV:', process.env.NODE_ENV)
     console.log("Express server running at http://localhost:" + port);
 });
