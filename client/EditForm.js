@@ -26,13 +26,14 @@ class EditForm extends React.Component {
         return (
             <div className="form">
                 <textarea className="form__text"
-                    rows="5" cols="30"
                     ref="text"
                     defaultValue={note ? note.text : ""}>
                 </textarea>
-                <button className="form__button" onClick={this._onButtonClick}>
-                    {role === 'add-note' ? 'Добавить' : 'Сохранить'}
-                </button>
+                <div className="button-container">
+                    <button className="form__button" onClick={this._onButtonClick}>
+                        {role === 'add-note' ? 'Add' : 'Save'}
+                    </button>
+                </div>
             </div>
         );
     }

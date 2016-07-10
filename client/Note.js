@@ -8,8 +8,7 @@ function Notes({
     onEditClickHandler, onEditFormUnmount, onSaveClickHandler
 }) {
     return (
-        <div>
-            <p>{ note.text }</p>
+        <div className="note">
             {editMode ?
                 <EditForm
                     note={note}

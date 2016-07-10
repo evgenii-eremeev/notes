@@ -49,7 +49,9 @@ class App extends React.Component {
     render () {
         const { notes, currEditedNote } = this.state;
         return (
-            <div>
+            <div className="app">
+                <h1 className="app__header">Collaborative Notes</h1>
+                <EditForm role='add-note' onClickHandler={this._onAddClickHandler} />
                 {notes.map((note, idx) => (
                     <Note key={idx}
                         note={note}
@@ -60,7 +62,6 @@ class App extends React.Component {
                         onEditFormUnmount={this._onEditFormUnmount}
                         />
                 ))}
-                <EditForm role='add-note' onClickHandler={this._onAddClickHandler} />
             </div>
 
         );

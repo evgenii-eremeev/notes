@@ -8,9 +8,6 @@ const io = require('socket.io')(http);
 // models
 const Note = require('./server/models/note.js');
 
-// генератор случайных имена для сокетов
-const randomName = require('./server/randomName.js');
-
 // загружаем скрытые переменные
 require('dotenv').load();
 
@@ -25,12 +22,14 @@ app.get('/', function (req, res) {
 });
 
 
-// helper
+// helper. emits state to users
 function emitState(io) {
-    Note.find(function (err, notes) {
-        if (err) return console.error(err);
-        io.sockets.emit('state', notes);
-    });
+    Note.find()
+        .sort({ created: -1 })
+        .exec((err, notes) => {
+            if (err) return console.error(err);
+            io.sockets.emit('state', notes);
+        });
 }
 
 
@@ -61,7 +60,7 @@ io.on('connection', (socket) => {
 
         Note.findByIdAndUpdate(
             noteId,
-            { occupied: randomName(socket.id) }, // {$set: { occupied: randomName(socket.id) }}
+            { occupied: socket.id }, // {$set: { occupied: socket.id }}
             (err, note) => {
                 if (err) return console.error(err);
                 emitState(io);
@@ -96,7 +95,7 @@ io.on('connection', (socket) => {
     // выйти из режима редактирования при закрытии вкладки
     socket.on('disconnect', () => {
         Note.update(
-            { occupied: randomName(socket.id) },
+            { occupied: socket.id },
             { $unset: { occupied: ''}},
             (err) => {
                 if (err) return console.error(error);

@@ -28430,7 +28430,13 @@
 
 	            return _react2.default.createElement(
 	                'div',
-	                null,
+	                { className: 'app' },
+	                _react2.default.createElement(
+	                    'h1',
+	                    { className: 'app__header' },
+	                    'Collaborative Notes'
+	                ),
+	                _react2.default.createElement(_EditForm2.default, { role: 'add-note', onClickHandler: this._onAddClickHandler }),
 	                notes.map(function (note, idx) {
 	                    return _react2.default.createElement(_Note2.default, { key: idx,
 	                        note: note,
@@ -28440,8 +28446,7 @@
 	                        onSaveClickHandler: _this2._onSaveClickHandler,
 	                        onEditFormUnmount: _this2._onEditFormUnmount
 	                    });
-	                }),
-	                _react2.default.createElement(_EditForm2.default, { role: 'add-note', onClickHandler: this._onAddClickHandler })
+	                })
 	            );
 	        }
 	    }]);
@@ -28486,12 +28491,7 @@
 
 	    return _react2.default.createElement(
 	        'div',
-	        null,
-	        _react2.default.createElement(
-	            'p',
-	            null,
-	            note.text
-	        ),
+	        { className: 'note' },
 	        editMode ? _react2.default.createElement(_EditForm2.default, {
 	            note: note,
 	            onClickHandler: onSaveClickHandler,
@@ -28769,13 +28769,16 @@
 	                "div",
 	                { className: "form" },
 	                _react2.default.createElement("textarea", { className: "form__text",
-	                    rows: "5", cols: "30",
 	                    ref: "text",
 	                    defaultValue: note ? note.text : "" }),
 	                _react2.default.createElement(
-	                    "button",
-	                    { className: "form__button", onClick: this._onButtonClick },
-	                    role === 'add-note' ? 'Добавить' : 'Сохранить'
+	                    "div",
+	                    { className: "button-container" },
+	                    _react2.default.createElement(
+	                        "button",
+	                        { className: "form__button", onClick: this._onButtonClick },
+	                        role === 'add-note' ? 'Add' : 'Save'
+	                    )
 	                )
 	            );
 	        }
@@ -28790,7 +28793,7 @@
 /* 223 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -28807,28 +28810,39 @@
 	    var onEditClickHandler = _ref.onEditClickHandler;
 	    var note = _ref.note;
 
-	    return !note.occupied ? _react2.default.createElement(
-	        'div',
+	    return _react2.default.createElement(
+	        "div",
 	        null,
 	        _react2.default.createElement(
-	            'button',
-	            { onClick: function onClick() {
-	                    return onDeleteClickHandler(note._id);
-	                } },
-	            'Удалить'
-	        ),
-	        _react2.default.createElement(
-	            'button',
-	            { onClick: function onClick() {
+	            "p",
+	            { className: "note__text", onClick: function onClick() {
 	                    return onEditClickHandler(note._id);
 	                } },
-	            'Редактировать'
+	            note.text
+	        ),
+	        !note.occupied ? _react2.default.createElement(
+	            "div",
+	            { className: "button-container" },
+	            _react2.default.createElement(
+	                "button",
+	                { onClick: function onClick() {
+	                        return onDeleteClickHandler(note._id);
+	                    } },
+	                "Delete"
+	            ),
+	            _react2.default.createElement(
+	                "button",
+	                { onClick: function onClick() {
+	                        return onEditClickHandler(note._id);
+	                    } },
+	                "Edit"
+	            )
+	        ) : _react2.default.createElement(
+	            "p",
+	            { className: "edit-message" },
+	            "Редактирует: ",
+	            note.occupied
 	        )
-	    ) : _react2.default.createElement(
-	        'p',
-	        null,
-	        'Редактируется: ',
-	        note.occupied
 	    );
 	}
 

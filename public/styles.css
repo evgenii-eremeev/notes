@@ -1,7 +1,84 @@
-.form__title {
-    display: block;
+@import url(https://fonts.googleapis.com/css?family=Dosis:400,700);
+
+html {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #CAFFE5;
+    font-family: 'Dosis', sans-serif;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+    padding: 0;
+    margin: 0;
+}
+
+.app {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.app__header {
+    flex-basis: 100%;
+    text-align: center;
+    margin: 0.5em 0;
+}
+
+.form {
+    flex-basis: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .form__button {
-    display: block;
+
+}
+
+.form__text {
+    font-family: inherit;
+    font-size: inherit;
+    width: 300px;
+    min-height: 218px;
+    padding: 0.6em;
+    /*margin-bottom: 0.9em;*/
+}
+
+.note {
+    width: 300px;
+    background-color: #fff;
+    margin: 1em;
+}
+
+.note__text {
+    margin: 0.6em;
+    min-height: 200px;
+    background-color: white;
+    flex: 1;
+}
+
+.edit-message {
+    text-align: center;
+    margin-top: 1.4em;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+}
+
+
+button {
+    background-color: #29BDC1;
+	margin: 0.3em;
+	padding: 0.3em 0.5em;
+	border: none;
+	cursor: pointer;
+	border-radius: 0.5em;
+	box-shadow: inset 0 0 10px #999;
+	font-family: inherit;
+	font-size: 1.1em;
 }
